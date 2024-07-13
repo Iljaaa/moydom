@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Form, Button, Row} from 'react-bootstrap';
+import {ValidateNumber} from "../validation/validateNumber";
 
 type Props = {
   isLoading: boolean,
@@ -9,23 +10,17 @@ type Props = {
 const LoginForm: React.FC<Props> = (props:Props) =>
 {
   const [number, setNumber] = useState<string>('');
+  const [isValidate, setIsValidate] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) =>
   {
     e.preventDefault();
-
-    // const validationResult = ValidateAuthCredentials(formState, true)
-    // if (validationResult.isValid) {
-    //   props.onSubmit(formState)
-    // }
+    setIsValidate(true);
+    if (!ValidateNumber(number, true).isValid) return
     props.onSubmit(number)
   };
 
-  // const validationResult = useMemo(() => ValidateAuthCredentials(formState, isValidate), [isValidate, formState.email, formState.password])
-//
-//   const regex = /^\d{2}:\d{2}:\d{5,7}:\d{2}$/;
-//
-//   console.log(regex.test("12:34:12345:67")); // true
+  const validation = ValidateNumber(number, isValidate)
 
   return <Form onSubmit={handleSubmit}>
     <Row>
@@ -39,8 +34,8 @@ const LoginForm: React.FC<Props> = (props:Props) =>
                           value={number}
                           disabled={props.isLoading}
                           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNumber(event.target.value)}
-                          isInvalid={false}/>
-            <Form.Control.Feedback type="invalid">asdasd</Form.Control.Feedback>
+                          isInvalid={!validation.isValid}/>
+            {validation.error !== "" && <Form.Control.Feedback type="invalid">{validation.error}</Form.Control.Feedback>}
           </Form.Group>
         </div>
       </div>
