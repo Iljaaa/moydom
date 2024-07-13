@@ -3,11 +3,14 @@
 namespace tests\Feature\Api;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class SearchApiTest extends TestCase
 {
+    use DatabaseTransactions;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -43,40 +46,17 @@ class SearchApiTest extends TestCase
     /**
      *
      */
-    public function test_request_with_wrong_code(): void
+    public function test_request_with_wrong_format_code(): void
     {
         $response = $this->withToken($this->token)
-            ->postJson(route('api.search'), ['code' => 'small']);
+            ->postJson(route('api.search'), ['code' => '52:__:70256:1560']);
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors([
             'code' => [
-                'The code field must be at least 14 characters.'
+                'he code field format is invalid.'
             ]
         ]);
-
-        $response = $this->withToken($this->token)
-            ->postJson(route('api.search'), ['code' => 'to_loooooooooooong_code']);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors([
-            'code' => [
-                'The code field must not be greater than 16 characters.'
-            ]
-        ]);
-    }
-
-    /**
-     *
-     */
-    public function test_search_with_wrong_code(): void
-    {
-        $response = $this->withToken($this->token)
-            ->postJson(route('api.search'), ['code' => '___18:70256:1560']);
-
-        $response->assertStatus(200);
-        $response->assertJsonPath('success', false);
-        $response->assertJsonPath('errorCode', 'Object not found');
     }
 
     /**

@@ -24,7 +24,13 @@ class ApiSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => ['string', 'required', 'min:14', 'max:16'],
+            'code' => [
+                'string',
+                'required',
+                'min:14',
+                'max:16',
+                'regex:/^[0-9]{2}:[0-9]{2}:[0-9]{5,7}:[0-9]{2,4}+$/i'
+            ],
         ];
     }
 }
