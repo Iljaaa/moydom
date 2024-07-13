@@ -7,8 +7,12 @@ test task for moydom company
 
 В рамках тестового задания я не стал выносить обертку вокруг апи в отдельный пакет.
 
-Пользователи создаются при помози сидов, они смогут авторизоваться в системе, 
-но пароли им генерируются рандомно
+Пользователи создаются при помози сидов  
+test@example.com:secret  
+test2@example.com:secret2  
+test3@example.com:secret3  
+test4@example.com:secret4  
+test5@example.com:secret5
 
 Клиентская часть дополнительно использует react-router и react-redux
 
