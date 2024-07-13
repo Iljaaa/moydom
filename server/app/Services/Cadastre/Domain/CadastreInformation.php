@@ -116,7 +116,7 @@ class CadastreInformation
      */
     public function getFlore(): ?string
     {
-        return $this->data['flore'];
+        return $this->data['flore'] ?? '';
     }
 
     /**

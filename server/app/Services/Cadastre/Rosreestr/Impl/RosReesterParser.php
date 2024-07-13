@@ -23,14 +23,19 @@ class RosReesterParser implements Parser
         {
             $egrp = $data['egrp'];
             $o->setAddress($egrp['objectData']['objectAddress']['mergedAddress'] ?? '');
-            $o->setFlore($egrp['premisesData']['premisesFloor'] ?? null);
+            if (isset($egrp['premisesData'])){
+                $o->setFlore($egrp['premisesData']['premisesFloor'] ?? null);
+            }
         }
 
         if (isset($data['gkn']))
         {
             $gkn = $data['gkn'];
 
-            $o->setArea($gkn['objectData']['flat']['area'] ?? '');
+            if (isset($gkn['objectData']['area'])) {
+                $o->setArea($gkn['objectData']['area']);
+            }
+
             $o->setCadastreValue($gkn['objectData']['flat']['cadCostValue'] ?? 0);
             try {
                 if (!empty($gkn['objectData']['flat']['dateCreated'])) {

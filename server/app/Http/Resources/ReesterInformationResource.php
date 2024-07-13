@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ReesterInformationResource extends JsonResource
 {
-    const DATE_FORMAT = 'Y-m-d';
+    const DATE_FORMAT = 'd.m.Y';
 
     public function __construct(private CadastreInformation $result)
     {
@@ -21,14 +21,17 @@ class ReesterInformationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $vd = $this->result->getCadastreValueDeterminationDate();
+        $nd = $this->result->getCadastreNumberAssignmentDate();
+
         return [
             'address' => $this->result->getAddress(),
             'flore' => $this->result->getFlore(),
             'area' => $this->result->getArea(),
             'cadastre_value' => $this->result->getCadastreValue(),
-            'cadastre_value_date' => $this->result->getCadastreValueDeterminationDate()->format(static::DATE_FORMAT),
+            'cadastre_value_date' => ($vd) ? $vd->format(static::DATE_FORMAT) : '',
             'cadastre_number' => $this->result->getCadastreNumber(),
-            'cadastre_number_date' => $this->result->getCadastreNumberAssignmentDate()->format(static::DATE_FORMAT),
+            'cadastre_number_date' => ($nd) ? $nd->format(static::DATE_FORMAT) : '',
         ];
     }
 }

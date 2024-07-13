@@ -65,7 +65,7 @@ class SearchApiTest extends TestCase
     public function test_search_in_reester(): void
     {
         $response = $this->withToken($this->token)
-            ->postJson(route('api.search'), ['code' => '52:18:70256:1560']);
+            ->postJson(route('api.search'), ['code' => '24:02:4301001:38']);
 
         $response->assertStatus(200);
         $response->assertJsonPath('success', true);
