@@ -10,6 +10,6 @@ return [
     /**
      * Api key
      */
-    'api_key' => env('ROSREESTR_APIKEY', ''),
+    'token' => env('ROSREESTR_TOKEN', ''),
 
 ];

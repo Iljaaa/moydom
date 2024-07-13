@@ -27,13 +27,15 @@ class RosReesterTest extends TestCase
     public function test_parser(): void
     {
         $result = (new RosReesterParser)->parse($this->data);
+        $this->assertTrue($result->isSuccess());
 
-        $this->assertEquals('г Нижний Новгород, б-р 60-летия Октября, д. 23, 134', $result->getAddress());
-        $this->assertEquals('17', $result->getFlore());
-        $this->assertEquals(65.0, $result->getArea());
-        $this->assertEquals(3858786.75, $result->getCadastreValue());
-        $this->assertEquals('2015-02-05', $result->getCadastreNumberAssignmentDate()->format('Y-m-d'));
-        $this->assertEquals('2020-12-30', $result->getCadastreValueDeterminationDate()->format('Y-m-d'));
+        $cadastreInformation = $result->getInformation();
+        $this->assertEquals('г Нижний Новгород, б-р 60-летия Октября, д. 23, 134', $cadastreInformation->getAddress());
+        $this->assertEquals('17', $cadastreInformation->getFlore());
+        $this->assertEquals(65.0, $cadastreInformation->getArea());
+        $this->assertEquals(3858786.75, $cadastreInformation->getCadastreValue());
+        $this->assertEquals('2015-02-05', $cadastreInformation->getCadastreNumberAssignmentDate()->format('Y-m-d'));
+        $this->assertEquals('2020-12-30', $cadastreInformation->getCadastreValueDeterminationDate()->format('Y-m-d'));
     }
 
     public function test_service()
@@ -43,7 +45,6 @@ class RosReesterTest extends TestCase
 
         $mockParser = $this->createMock(Parser::class);
         $mockParser->expects($this->once())->method('parse');
-
 
         (new RosReestrService($mockClient, $mockParser))->request('code');
     }

@@ -7,6 +7,7 @@ use App\Services\Cadastre\CadastreService;
 use App\Services\Cadastre\Domain\CadastreInformation;
 use App\Services\Cadastre\Rosreestr\Contracts\Client;
 use App\Services\Cadastre\Rosreestr\Contracts\Parser;
+use App\Services\Cadastre\SearchResult;
 
 class RosReestrService implements CadastreService
 {
@@ -17,9 +18,9 @@ class RosReestrService implements CadastreService
 
     /**
      * @param string $cadastreNumber
-     * @return CadastreInformation
+     * @return SearchResult
      */
-    public function request(string $cadastreNumber): CadastreInformation
+    public function request(string $cadastreNumber): SearchResult
     {
         $url =  config('rosreester.url')
                 . "/" . $cadastreNumber

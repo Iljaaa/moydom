@@ -1,20 +1,23 @@
 <?php
 
-namespace app\Services\Cadastre\Rosreestr\Impl;
+namespace App\Services\Cadastre\Rosreestr\Impl;
 
 use App\Services\Cadastre\Domain\CadastreInformation;
 use App\Services\Cadastre\Rosreestr\Contracts\Parser;
+use App\Services\Cadastre\SearchResult;
 
 class RosReesterParser implements Parser
 {
     /**
      *
      */
-    public function parse(array $data): CadastreInformation
+    public function parse(array $data): SearchResult
     {
+        if (!empty($data['errorCode'])) {
+            return SearchResult::CreateFailResult($data['errorCode']);
+        }
 
         $o = new CadastreInformation();
-
 
         if (isset($data['egrp']))
         {
@@ -49,7 +52,8 @@ class RosReesterParser implements Parser
             }
         }
 
-        return $o;
+        return SearchResult::createSuccessResult()
+            ->setInformation($o);
     }
 
 }
