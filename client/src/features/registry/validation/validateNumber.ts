@@ -16,7 +16,7 @@ export const ValidateNumber = (number:string, validateEmptyFields: boolean):Vali
 {
   number.trim()
   if (validateEmptyFields && !number) {
-    return {isValid: false, error: 'Email is required'}
+    return {isValid: false, error: 'Number is required'}
   }
 
   const regex = /^[0-9]{2}:[0-9]{2}:[0-9]{5,7}:[0-9]{2,4}$/i;
