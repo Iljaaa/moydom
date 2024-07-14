@@ -8,11 +8,11 @@
 В рамках тестового задания я не стал выносить обертку вокруг апи в отдельный пакет.
 
 Пользователи создаются при помози сидов  
-test@example.com:secret  
-test2@example.com:secret2  
-test3@example.com:secret3  
-test4@example.com:secret4  
-test5@example.com:secret5
+test@example.com secret  
+123456@example.com 123456  
+love@example.com love  
+sex@example.com sex  
+password@example.com password
 
 Клиентская часть дополнительно использует react-router и react-redux
 
